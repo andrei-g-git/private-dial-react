@@ -1,0 +1,110 @@
+import React, { useEffect, useState } from 'react';
+import '../css/GroupDialog.css';
+
+function GroupDialog(props){
+class GroupDialog extends React.Component{
+    
+    
+    //const [show, setShow] = useState(false);
+
+/*     useEffect(() => {
+
+
+        document.getElementById(props.idAffix + "-group-name-field").value = props.previousName;
+        document.getElementById(props.idAffix + "-group-color-field").value = props.previousColor;
+
+
+    },  // eslint-disable-next-line
+        [props.show, props.previousName, props.previousColor]
+    ) */
+
+/*     useEffect(() => {
+        //setShow(props.show);
+    }, [props.show]) */
+
+/* setShow(true)    'too many re-renders...*/
+
+    return(
+        //<div>
+        //    {
+        //    show
+//
+        //    ? 
+
+        <div 
+            id={props.idAffix + "-group-dialog-container"}
+            className="group-dialog-container"
+            //style={switchVisibilityStyle.bind(null, props.show)}
+        >
+            <form
+                id={props.idAffix + "-group-dialog"}
+                className="group-dialog-form"
+                onSubmit={handleSubmit.bind(null, props)}
+            >
+                <label
+                    className="group-name-label"
+                >
+                    Type in the folder name
+                </label>
+
+                <input 
+                    type="text"
+                    id={props.idAffix + "-group-name-field"} /* these are going to repeat in the dom, should be dynamic */
+                    className="group-name-field"                    
+                >
+                </input>
+
+                <label
+                    className="group-color-label"
+                >
+                    Type in the folder color or hex
+                </label>
+
+                <input 
+                    type="text"
+                    id={props.idAffix + "-group-color-field"}
+                    className="group-color-field"
+                >
+                </input>
+
+                <button //should be img
+                    type="submit"
+                    id={props.idAffix + "-save-group-button"}
+                    className="save-group-button"
+                >
+                    Save
+                </button>
+
+                <button
+                    type="text"
+                    id={props.idAffix + "-cancel-group-button"}
+                    className="cancel-group-save"
+                    onClick={setShow(false)}
+                >
+                    Cancel
+                </button>
+            </form>
+        </div>
+
+     //   :
+     //   
+     //   <div></div>
+//
+     //       }
+      //  </div>
+    );
+}
+
+function handleSubmit /* = */ (event, props) /* => */{   // no idea if this works, try the nested return thing if it doesn't 
+    event.preventDefault();
+
+    var nameField = document.getElementById(props.idAffix + "-group-name-field");
+    var colorField = document.getElementById(props.idAffix + "-group-color-field");
+
+    props.handleNameAndColor(nameField.value, colorField.value);
+
+    nameField.value = ""; 
+    colorField.value = "";
+}
+
+export default GroupDialog;

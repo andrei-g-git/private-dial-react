@@ -1,0 +1,67 @@
+.group-dialog-container{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;     
+}
+
+.group-dialog-form{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 2fr 1fr;
+/*     min-width: 250px;
+    min-height: 300px;
+    width: 67%;
+    height: auto; */
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    box-shadow: 0px 0px 10px;
+    padding: 30px;    
+
+    grid-template-areas: 
+        "   .   name-label name-label name-label   .   "
+        "   .   name-field name-field name-field   .   "
+        "   .   color-lbl  color-lbl   color-lbl   .   "
+        "   .  color-field color-field color-field  .   "
+        "   .        .           .           .      .  "
+        "   .        .           .           .      .  "    
+        "  save      .           .           .    cancel "    
+
+    ;
+}
+
+/* .group-name-field, .group-color-field{
+
+} */
+
+.group-name-field{
+    grid-area: name-field;
+}
+
+.group-color-field{
+    grid-area: color-field;
+}
+
+.group-name-label{
+    grid-area: name-label;
+}
+
+.group-color-label{
+    grid-area: color-lbl;
+}
+
+.save-group-button{
+    grid-area: save;
+}
+
+.cancel-group-save{
+    grid-area: cancel;
+}

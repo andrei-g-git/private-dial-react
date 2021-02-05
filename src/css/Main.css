@@ -1,0 +1,16 @@
+:root{
+
+}
+
+#main{
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+
+    /* grid-template-columns: 20fr auto 1fr auto; */
+    grid-template-columns: repeat(auto-fill, 95% 5%);
+    grid-template-rows: 100%;
+
+/*     justify-content: stretch; // these don't seem to work, and item-speciffic equivalents don't either 
+    justify-items: stretch; */
+}
