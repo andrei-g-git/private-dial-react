@@ -1,0 +1,17 @@
+.bookmark-with-favicon{
+    /* border-bottom: solid 1px lightgray; */
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    align-items: center;
+}
+
+.favicon{
+    justify-self: center;
+}
+
+.page-name{
+    justify-self: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

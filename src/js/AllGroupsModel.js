@@ -10,7 +10,9 @@ class AllGroupsModel{
         return this.groups;
     }
 
-
+    pushBookmarkAtGroupIndex(bookmark, index){
+        this.groups[index].pushBookmark(bookmark);
+    }
 
     getLength(){
         return this.groups.length;

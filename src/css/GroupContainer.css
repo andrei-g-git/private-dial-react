@@ -7,5 +7,6 @@
     border-style: solid;
     border-color: lightgray;
 
-    background-color: powderblue;
+    display: flex;
+    flex-direction: row;
 }

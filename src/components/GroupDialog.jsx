@@ -79,9 +79,9 @@ class GroupDialog extends React.Component{
                                 id={this.props.idAffix + "-cancel-group-button"}
                                 className="cancel-group-save"
                                 onClick={this.props.handleClose}
-                            >
-                                Cancel
-                            </button>
+                        >
+                            Cancel
+                        </button>
 
 
 

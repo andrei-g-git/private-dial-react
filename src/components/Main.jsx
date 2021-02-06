@@ -7,8 +7,10 @@ import GroupContainer from './GroupContainer.jsx'
 import AllGroupsModel from '../js/AllGroupsModel.js';
 import BookmarkGroupModel from '../js/BookmarkGroupModel.js';
 import '../css/Main.css'
+import BookmarkModel from '../js/BookmarkModel.js';
 
 export const AddGroupButtonContext = React.createContext();
+export const AddBookmarkContext = React.createContext();
 
 class Main extends React.Component{
     
@@ -17,7 +19,9 @@ class Main extends React.Component{
 
         this.state = {
             allGroups: new AllGroupsModel(),
-            showGroupDialog: false
+            showGroupDialog: false,
+            showBookmarkDialog: false,
+            groupIndexOfRequestingBookmark: 0
         };
     }
 
@@ -27,10 +31,14 @@ class Main extends React.Component{
             <div
                 id="main"
             >
-                <GroupContainer
-                    groups={this.state.allGroups.getGroups()}
+                <AddBookmarkContext.Provider
+                    value={this.openBookmarkDialog}
                 >
-                </GroupContainer>
+                    <GroupContainer
+                        groups={this.state.allGroups.getGroups()}
+                    >
+                    </GroupContainer>
+                </AddBookmarkContext.Provider>
 
                 <AddGroupButtonContext.Provider
                     value={this.openGroupDialog}
@@ -48,9 +56,20 @@ class Main extends React.Component{
                 >
                 </GroupDialog> {/* new */}
 
-                <GroupDialog></GroupDialog> {/* edit */}
+                <GroupDialog
 
-                <BookmarkDialog></BookmarkDialog>
+                >
+                </GroupDialog> {/* edit */}
+
+                <BookmarkDialog
+                    show={this.state.showBookmarkDialog}
+                    handleUrl={this.processNewBookmark}
+                    handleClose={this.closeDialog}
+                    idAffix="new"
+                    previousUrl=""   
+                    groupIndex={this.state.groupIndexOfRequestingBookmark}                             
+                >
+                </BookmarkDialog> {/* new */}
 
                 <Contextmenu></Contextmenu>
             </div>
@@ -61,6 +80,13 @@ class Main extends React.Component{
         this.setState({
             showGroupDialog: true
         })
+    }
+
+    openBookmarkDialog = (index) => {
+        this.setState({
+            groupIndexOfRequestingBookmark: index,
+            showBookmarkDialog: true
+        });
     }
 
     processNewGroupProperties = (name, color) =>{
@@ -76,9 +102,21 @@ class Main extends React.Component{
         }
     }
 
+    processNewBookmarkAtIndex = (url, index) =>{
+        if(url.length){
+            var newBookmark = new BookmarkModel(url);
+            this.state.allGroups.pushBookmarkAtGroupIndex(newBookmark, index);
+            this.setState({
+                allGroups: this.state.allGroups
+            });
+            this.closeDialog();
+        }
+    }
+
     closeDialog = () => {
         this.setState({
-            showGroupDialog: false
+            showGroupDialog: false,
+            showBookmarkDialog: false
         })
     }
 }
