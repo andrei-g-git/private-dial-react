@@ -1,7 +1,6 @@
 import React from 'react';
 import '../css/BookmarkDialog.css';   //EMPTY 1!!! #############################
 
-// NO CSS, DOESN"T RENDER
 class BookmarkDialog extends React.Component{
 
     constructor(props){

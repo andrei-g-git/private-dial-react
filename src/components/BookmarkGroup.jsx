@@ -25,12 +25,14 @@ class BookmarkGroup extends React.Component{
             >
                 <div
                     className="group-header"
+                    id={"group-header-" + this.props.groupModel.getIndex()}
+                    style={{backgroundColor: this.props.groupModel.getColor()}}
                 >
                     <AddBookmarkContext.Consumer>
                         {(value) => {
                             return(
                                 <img 
-                                    className="group-button"
+                                    className="group-button" //new  bookmark
                                     src={addButtonImage}
                                     alt="N/A"
                                     onClick={() => value(this.state.groupModel.getIndex())}
@@ -46,7 +48,7 @@ class BookmarkGroup extends React.Component{
                     </label>
                     
                     <img 
-                        className="group-button"
+                        className="group-button" //edit bookmark
                         src={editButtonImage}
                         alt="N/A"
                     />
@@ -78,12 +80,15 @@ class BookmarkGroup extends React.Component{
         return String(itemName + new Date().getTime().toString());
     }
 
-    //test
+    changeGroupHeaderBackgroundColor = (colorString, elementId) => {
+        //document.getElementById(elementId).style["background-color"] = colorString;
+    }
+
     componentDidMount(){
-/*         this.state.groupModel.pushBookmark(new BookmarkModel("https://wikipedia.org/1234567890123456789"));
-        this.setState({
-            groupModel: this.state.groupModel
-        }) */
+        this.changeGroupHeaderBackgroundColor(
+            this.props.groupModel.getColor(),
+            "group-header-" + this.props.groupModel.getIndex()
+        );
     }
 }
 

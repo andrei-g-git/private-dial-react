@@ -1,0 +1,53 @@
+/* repeating a lot of code here, should be reusable */
+
+.bookmark-dialog-container{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;     
+}
+
+.bookmark-dialog-form{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 2fr 1fr;
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    box-shadow: 0px 0px 10px;
+    padding: 30px;    
+
+    grid-template-areas: 
+        "   .        .           .           .      .  "    
+        "   .        .           .           .      .  "
+        "   .   name-label name-label name-label   .   "
+        "   .   name-field name-field name-field   .   "
+        "   .        .           .           .      .  "
+        "   .        .           .           .      .  "    
+        "  save      .           .           .    cancel "    
+
+    ;
+}
+
+.bookmark-name-field{
+    grid-area: name-field;
+}
+
+.bookmark-name-label{
+    grid-area: name-label;
+}
+
+.save-bookmark-button{
+    grid-area: save;
+}
+
+.cancel-bookmark-save{
+    grid-area: cancel;
+}

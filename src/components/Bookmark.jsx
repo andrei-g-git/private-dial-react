@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/Bookmark.css';
+import FaviconSrcGenerator from '../js/FaviconSrcGenerator';
 
 function Bookmark(props){
     return(
@@ -8,7 +9,7 @@ function Bookmark(props){
         >
             <img
                 className="favicon"
-                img="..."
+                src={generateFavicon(props.model.getUrl())} //doesn't even run
                 alt="N/A"
             />
 
@@ -19,6 +20,11 @@ function Bookmark(props){
             </label>
         </div>
     );
+}
+
+const generateFavicon = (url) => {
+    let generator = new FaviconSrcGenerator();
+    return generator.generateFromUrl(url);
 }
 
 export default Bookmark;

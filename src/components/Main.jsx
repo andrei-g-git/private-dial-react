@@ -63,7 +63,7 @@ class Main extends React.Component{
 
                 <BookmarkDialog
                     show={this.state.showBookmarkDialog}
-                    handleUrl={this.processNewBookmark}
+                    handleUrl={this.processNewBookmarkAtIndex}
                     handleClose={this.closeDialog}
                     idAffix="new"
                     previousUrl=""   

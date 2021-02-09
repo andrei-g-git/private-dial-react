@@ -11,6 +11,17 @@ describe('BookmarkGroup', () => {
         return shallow(<BookmarkGroup {...props} />);
     }
 
+    it('has the right header color', () => { //same problem as eveywhere else, props are undefined. also it can't import the pngs
+/*          const _group = new MockGroup(0); //dryt
+        _group.setColor("red");
+        const _props = {
+            groupModel: _group
+        }
+        wrapper = setUp(_props);    
+        let groupHeader = wrapper.find(".group-header")[0];
+        expect(groupHeader.prop('style')).toHaveProperty("backgroundColor", "blue");  */   
+    });
+
     it('renders the correct name and color', () =>{
 /*         const _group = new MockGroup(0); //dryt
         _group.setName("groupie");
@@ -36,8 +47,10 @@ describe('BookmarkGroup', () => {
 })
 
 export default class MockGroup{
-    constructor(name){
+    constructor(index){
         this.name = name;
+        this.color = "lightgray"
+        this.index = index;
         this.bookmarks = [
             new BookmarkModelMock("url 1"),
             new BookmarkModelMock("url 2"),
@@ -47,6 +60,8 @@ export default class MockGroup{
 
     getName(){return this.name;}
     setName(name){this.name = name;}
+    setColor(color){this.color = color}
+    getIndex(){return this.index;}
 }
 
 class BookmarkModelMock {
