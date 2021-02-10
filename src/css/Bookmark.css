@@ -5,13 +5,19 @@
     align-items: center;
 }
 
+.bookmark-with-favicon:hover{
+    background-color: rgb(220, 220, 220);
+}
+
 .favicon{
     justify-self: center;
 }
 
 .page-name{
-    justify-self: center;
+    justify-self: left;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    width: 90%;
 }

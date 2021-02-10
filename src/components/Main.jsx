@@ -8,6 +8,7 @@ import AllGroupsModel from '../js/AllGroupsModel.js';
 import BookmarkGroupModel from '../js/BookmarkGroupModel.js';
 import '../css/Main.css'
 import BookmarkModel from '../js/BookmarkModel.js';
+import SaverAndLoader from '../js/SaverAndLoader.js';
 
 export const AddGroupButtonContext = React.createContext();
 export const AddBookmarkContext = React.createContext();
@@ -17,11 +18,16 @@ class Main extends React.Component{
     constructor(props){ //I needed to pass the props even though I don't have any
         super(props);
 
-        this.state = {
-            allGroups: new AllGroupsModel(),
+        this.state = { 
             showGroupDialog: false,
             showBookmarkDialog: false,
-            groupIndexOfRequestingBookmark: 0
+            groupIndexOfRequestingBookmark: 0,
+            showBookmarkContext: false, 
+            bookmarkContextX: "0px",
+            bookmarkContextY: "0px",  
+            rightClickedBookmark: 0,
+            saverAndLoader: new SaverAndLoader(),
+            allGroups: new AllGroupsModel()//this.newModelOrLoad()  //careful here        
         };
     }
 
@@ -36,6 +42,7 @@ class Main extends React.Component{
                 >
                     <GroupContainer
                         groups={this.state.allGroups.getGroups()}
+                        handleNoteContextWithIndexAndCoordinates={this.openBookmarkContext}
                     >
                     </GroupContainer>
                 </AddBookmarkContext.Provider>
@@ -71,7 +78,28 @@ class Main extends React.Component{
                 >
                 </BookmarkDialog> {/* new */}
 
-                <Contextmenu></Contextmenu>
+                <Contextmenu
+                    showContext={this.state.showBookmarkContext}
+                    idAffix="bookmark"
+                    handleClose={this.closeContext} //this has to be redundant...
+                    menuItems={[
+                        {
+                            name:"Edit",
+                            callback: null//this.openEditNoteModal
+                        },
+                        {
+                            name:"Placeholder",
+                            callback: null
+                        },
+                        {
+                            name:"Delete",
+                            callback: this.deleteBookmark
+                        }
+                    ]}
+                    positionX={this.state.bookmarkContextX}
+                    positionY={this.state.bookmarkContextY}
+                >
+                </Contextmenu>
             </div>
         );
     }
@@ -95,6 +123,9 @@ class Main extends React.Component{
             newGroup.setName(name);
             newGroup.setColor(color);
             this.state.allGroups.pushGroup(newGroup); //reset the forms in the modal
+
+            this.state.allGroups.setNew(false);
+
             this.setState({
                 allGroups: this.state.allGroups
             })
@@ -117,6 +148,70 @@ class Main extends React.Component{
         this.setState({
             showGroupDialog: false,
             showBookmarkDialog: false
+        });
+
+        this.savePrettyMuchEverything();
+    }
+
+    deleteBookmark = () =>{
+        this.setState({
+            showBookmarkContext: false
+        });
+
+        this.savePrettyMuchEverything();
+    }
+
+    closeContext = () => {
+
+    }
+
+    openBookmarkContext = (index, x, y) =>{
+        this.setState({
+            showBookmarkContext: true,
+            bookmarkContextX: x.toString() + "px",
+            bookmarkContextY: y.toString() + "px",
+            rightClickedBookmark: index //should probably be in model too
+        });
+    }
+
+    savePrettyMuchEverything = () =>{
+        this.state.saverAndLoader.saveObject('allGroups', this.state.allGroups);
+    }
+
+    loadPrettyMuchEverything = () => {
+        var allGroupsPlaceholder = new AllGroupsModel();
+        var loadedGroupsData = this.state.saverAndLoader.loadObject('allGroups');
+        for(var i = 0; i < loadedGroupsData.groups.length; i++){
+            var loadedGroup = loadedGroupsData.groups[i];
+            var groupPlaceholder = new BookmarkGroupModel(i);
+            groupPlaceholder.setName(loadedGroup.name);
+            groupPlaceholder.setColor(loadedGroup.color);
+            groupPlaceholder.setDefault(loadedGroup.default);
+
+            for(var j = 0; j < loadedGroup.bookmarks.length; j++){
+                var loadedBookmark = loadedGroup.bookmarks[j];
+                var url = loadedBookmark.url;
+                var bookmarkPlaceholder = new BookmarkModel(url);
+                groupPlaceholder.pushBookmark(bookmarkPlaceholder);
+            }
+
+            allGroupsPlaceholder.pushGroup(groupPlaceholder);  
+        }
+        return allGroupsPlaceholder;
+    }   
+    
+    newModelOrLoad = () => {
+        var loaded = this.loadPrettyMuchEverything();
+        if(loaded.groups.length && loaded.checkIfNew()){
+            return loaded;
+        } else {
+            return new AllGroupsModel();
+        }
+    }   
+    
+    componentDidMount(){
+        this.setState({
+            allGroups: this.newModelOrLoad()
         })
     }
 }

@@ -23,6 +23,8 @@ class GroupContainer extends React.Component{
                             groupModel={group}
                             key={this.generateUniqueKey(group.getName())} //no bueno gotta randomize key
                             value={group.getName()}
+
+                            handleNoteContextWithIndexAndCoordinates={this.props.handleNoteContextWithIndexAndCoordinates}
                         >
                         </BookmarkGroup>
                     )

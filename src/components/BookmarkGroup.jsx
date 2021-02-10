@@ -59,15 +59,18 @@ class BookmarkGroup extends React.Component{
                 >
                     {
                         this.state.groupModel.getBookmarks().map((bookmark) => 
-                            <Bookmark
-                                model={bookmark}
-                                key={/* () =>  */this.generateUniqueKey(bookmark.getUrl())}
+                            <div 
+                                onContextMenu={(event) => this.onRightClick(event, bookmark)}
                             >
-                            </Bookmark>
+                                <Bookmark
+                                    model={bookmark}
+                                    key={/* () =>  */this.generateUniqueKey(bookmark.getUrl())}                               
+                                >
+                                </Bookmark>
+                            </div>                                
                         )
                     }    
-                </div>
-                
+                </div>              
             </div>
         );
     }
@@ -90,6 +93,16 @@ class BookmarkGroup extends React.Component{
             "group-header-" + this.props.groupModel.getIndex()
         );
     }
+
+    onRightClick = (event, item) =>{
+        event.preventDefault();
+        var x = event.pageX;
+        var y = event.pageY;
+
+        var index = this.props.groupModel.getBookmarks().indexOf(item);
+        this.props.handleNoteContextWithIndexAndCoordinates(index, x, y);        
+    }
+
 }
 
 export default BookmarkGroup;
