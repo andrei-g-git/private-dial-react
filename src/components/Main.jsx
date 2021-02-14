@@ -147,22 +147,24 @@ class Main extends React.Component{
     closeDialog = () => {
         this.setState({
             showGroupDialog: false,
-            showBookmarkDialog: false
+            showBookmarkDialog: false,
         });
 
         this.savePrettyMuchEverything();
     }
 
     deleteBookmark = () =>{
-        this.setState({
-            showBookmarkContext: false
-        });
+        var bookmarks = this.state.allGroups.getGroupAt(this.state.groupIndexOfRequestingBookmark).getBookmarks();
+        bookmarks.splice(this.state.rightClickedBookmark, 1);
 
+        this.closeContext();
         this.savePrettyMuchEverything();
     }
 
     closeContext = () => {
-
+        this.setState({
+            showBookmarkContext: false 
+        });
     }
 
     openBookmarkContext = (index, x, y) =>{

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './../css/ContextMenu.css';
+import './../css/ContextMenu.scss';
 
 class ContextMenu extends React.Component{
     constructor(props){
@@ -19,15 +19,16 @@ class ContextMenu extends React.Component{
         if(this.props.showContext){ //this is silly, I'm already sending this back to the parent, might as well handle visibility directy from there
             return(
                 <div>
-                <ul
-                    style={{
-                        left: this.props.positionX,
-                        top: this.props.positionY
-                    }}
-                    id={ "context-menu-" + this.state.idAffix }
-                >
-                    {this.iterateItems()} 
-                </ul>  
+                    <ul
+                        style={{
+                            left: this.props.positionX,
+                            top: this.props.positionY
+                        }}
+                        id={ "context-menu-" + this.state.idAffix }
+                        onMouseLeave={this.onMouseLeave}
+                    >
+                        {this.iterateItems()} 
+                    </ul>  
                 </div>                
             )
         } else {
@@ -39,14 +40,16 @@ class ContextMenu extends React.Component{
         if(this.state.showMenu){
             var contextMenu = document.getElementById("#context-menu-" + this.props.idAffix.toString());
             contextMenu.addEventListener("click", this.handleClick);
-            contextMenu.addEventListener("mouseleave", this.onMouseLeave);
+            //contextMenu.addEventListener("mouseout", this.onMouseLeave);
         }            
     }
 
     componentWillUnmount(){
-        var contextMenu = document.getElementById("#context-menu-" + this.props.idAffix.toString());
-        contextMenu.removeEventListener("click", this.handleClick);  
-        contextMenu.removeEventListener("mouseleave", this.onMouseLeave);           
+        if(this.state.showMenu){
+            var contextMenu = document.getElementById("#context-menu-" + this.props.idAffix.toString());
+            contextMenu.removeEventListener("click", this.handleClick);  
+            //contextMenu.removeEventListener("mouseout", this.onMouseLeave);    
+        }       
     }
 
     iterateItems = () => {

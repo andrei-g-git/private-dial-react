@@ -1,6 +1,7 @@
 import React from 'react';
-import BookmarkGroup from './BookmarkGroup.jsx'
+import BookmarkGroup from './BookmarkGroup.jsx';
 import '../css/GroupContainer.css';
+//import '../css/ExtendedTest.scss';
 
 class GroupContainer extends React.Component{
     constructor(){
